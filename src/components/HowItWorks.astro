@@ -1,0 +1,66 @@
+---
+import { STEPS } from '../data/content';
+---
+
+<section class="how" aria-labelledby="how-title">
+  <div class="container">
+    <div class="how-head">
+      <span class="eyebrow">КАК ПРОТИЧА</span>
+      <h2 id="how-title">От записване до първия резултат</h2>
+    </div>
+    <ol class="how-grid">
+      {
+        STEPS.map((step) => (
+          <li class="how-step">
+            <div class="how-num">{step.num}</div>
+            <h3>{step.title}</h3>
+            <p>{step.desc}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .how {
+    background: var(--panel);
+    margin-top: 96px;
+    padding: 88px 0;
+  }
+  .how-head {
+    max-width: 620px;
+  }
+  .how-head h2 {
+    font-size: clamp(2rem, 3.4vw, 2.8rem);
+    line-height: 1.15;
+    margin: 12px 0 0;
+  }
+  .how-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 28px;
+    margin: 48px 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: none;
+  }
+  .how-num {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 38px;
+    color: rgba(28, 26, 22, 0.18);
+  }
+  .how-step h3 {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 18px;
+    margin: 10px 0 0;
+  }
+  .how-step p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 8px 0 0;
+  }
+</style>

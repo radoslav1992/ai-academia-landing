@@ -1,0 +1,229 @@
+---
+import { COURSES, courseAnchorId } from '../data/content';
+---
+
+<section id="courses" class="courses">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">КУРСОВЕТЕ</span>
+      <h2>Избери своя път в AI</h2>
+      <p>
+        Три самостоятелни програми, всяка от тях напълно безплатна. Запиши се за
+        една, за две или и за трите — изборът е изцяло твой.
+      </p>
+    </div>
+
+    <div class="course-grid">
+      {
+        COURSES.map((course) => (
+          <article
+            id={courseAnchorId(course.id)}
+            class="course-card"
+            style={`--c:${course.accent}`}
+          >
+            <div class="course-accent" aria-hidden="true" />
+            <div class="course-body">
+              <span class="course-num">{course.num}</span>
+              <h3 class="course-title">{course.title}</h3>
+              <p class="course-tagline">{course.tagline}</p>
+              <p class="course-desc">{course.desc}</p>
+
+              <div class="course-learn">
+                <span class="course-learn-label">КАКВО ЩЕ НАУЧИШ</span>
+                <ul class="course-topics">
+                  {course.topics.map((topic) => (
+                    <li>
+                      <span class="topic-plus" aria-hidden="true">
+                        ＋
+                      </span>
+                      <span>{topic}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class="course-meta">
+                <div>
+                  <div class="course-price">0 лв.</div>
+                  <div class="course-price-sub">Напълно безплатно</div>
+                </div>
+                <div class="course-place">
+                  <div class="course-place-main">Присъствено · София</div>
+                  <div class="course-place-sub">скоро и онлайн</div>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                class="course-cta"
+                data-open-modal
+                data-course={course.id}
+              >
+                Запиши се безплатно
+              </button>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .courses {
+    padding-block: 96px 40px;
+  }
+  .section-head {
+    max-width: 640px;
+  }
+  .section-head h2 {
+    font-size: clamp(2rem, 3.4vw, 2.8rem);
+    line-height: 1.15;
+    margin: 12px 0 0;
+  }
+  .section-head p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 16px 0 0;
+  }
+
+  .course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    gap: 28px;
+    margin-top: 48px;
+  }
+
+  .course-card {
+    background: var(--card);
+    border-radius: 24px;
+    border: 1px solid rgba(28, 26, 22, 0.08);
+    box-shadow: 0 18px 40px rgba(28, 26, 22, 0.06);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .course-accent {
+    height: 5px;
+    background: var(--c);
+  }
+  .course-body {
+    padding: 32px 30px 30px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .course-num {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1;
+    color: var(--c);
+  }
+  .course-title {
+    font-size: 26px;
+    line-height: 1.2;
+    margin: 14px 0 0;
+  }
+  .course-tagline {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--c);
+    margin: 8px 0 0;
+  }
+  .course-desc {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--muted);
+    margin: 14px 0 0;
+  }
+
+  .course-learn {
+    margin-top: 22px;
+    border-top: 1px solid rgba(28, 26, 22, 0.08);
+    padding-top: 18px;
+  }
+  .course-learn-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.03em;
+  }
+  .course-topics {
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  .course-topics li {
+    display: flex;
+    gap: 9px;
+    align-items: flex-start;
+  }
+  .topic-plus {
+    color: var(--c);
+    font-weight: 700;
+    flex-shrink: 0;
+    line-height: 1.5;
+  }
+  .course-topics li span:last-child {
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  .course-meta {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .course-price {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 22px;
+  }
+  .course-price-sub {
+    font-size: 12.5px;
+    color: var(--muted-2);
+  }
+  .course-place {
+    text-align: right;
+  }
+  .course-place-main {
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+  .course-place-sub {
+    font-size: 12px;
+    color: var(--muted-2);
+  }
+
+  .course-cta {
+    margin-top: 20px;
+    background: var(--c);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 15px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    width: 100%;
+    transition: filter 0.15s ease, transform 0.15s ease;
+  }
+  .course-cta:hover {
+    filter: brightness(0.94);
+  }
+  .course-cta:active {
+    transform: translateY(1px);
+  }
+</style>

@@ -1,0 +1,206 @@
+---
+import { Image } from 'astro:assets';
+import lecturerPhoto from '../assets/lecturer-photo.png';
+import { LECTURER, CERTIFICATIONS } from '../data/content';
+---
+
+<section id="lecturer" class="lecturer">
+  <div class="container lecturer-grid">
+    <div class="lecturer-media">
+      <div class="lecturer-frame">
+        <Image
+          src={lecturerPhoto}
+          alt={`${LECTURER.name}, лектор`}
+          width={520}
+          height={561}
+          widths={[360, 520, 720]}
+          sizes="(max-width: 880px) 100vw, 380px"
+          loading="lazy"
+          class="lecturer-img"
+        />
+      </div>
+      <div class="lecturer-chip">
+        <span class="chip-badge" aria-hidden="true">10%</span>
+        <span class="chip-text">
+          <strong>Топ 10% потребители в Lovable.dev</strong>
+          <small>По данни на платформата, юни 2026</small>
+        </span>
+      </div>
+    </div>
+
+    <div class="lecturer-copy">
+      <span class="eyebrow">ЗА ЛЕКТОРА</span>
+      <h2>{LECTURER.name}</h2>
+      <p class="lecturer-role">{LECTURER.role}</p>
+
+      <ul class="lecturer-tags">
+        {LECTURER.tags.map((tag) => <li>{tag}</li>)}
+      </ul>
+
+      {LECTURER.bio.map((para) => <p class="lecturer-bio">{para}</p>)}
+
+      <div class="lecturer-certs">
+        <span class="lecturer-certs-label">СЕРТИФИКАТИ</span>
+        <ul>
+          {
+            CERTIFICATIONS.map((cert) => (
+              <li>
+                <span class="cert-plus" aria-hidden="true">
+                  ＋
+                </span>
+                <span>{cert}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .lecturer {
+    padding-block: 96px 40px;
+  }
+  .lecturer-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 56px;
+    align-items: start;
+  }
+
+  .lecturer-media {
+    position: relative;
+  }
+  .lecturer-frame {
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 24px 50px rgba(28, 26, 22, 0.14);
+  }
+  .lecturer-img {
+    display: block;
+    width: 100%;
+    height: 440px;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .lecturer-chip {
+    margin-top: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 14px 18px;
+    box-shadow: 0 14px 30px rgba(28, 26, 22, 0.08);
+  }
+  .chip-badge {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: conic-gradient(from 180deg, #ff7a59, #7c5cff, #ff7a59);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 800;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+  .chip-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+  }
+  .chip-text strong {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .chip-text small {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted-2);
+  }
+
+  .lecturer-copy h2 {
+    font-size: clamp(1.9rem, 3vw, 2.5rem);
+    line-height: 1.2;
+    margin: 12px 0 0;
+  }
+  .lecturer-role {
+    font-size: 16px;
+    color: var(--muted-2);
+    margin: 6px 0 0;
+  }
+  .lecturer-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 20px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .lecturer-tags li {
+    background: var(--panel);
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-soft);
+  }
+  .lecturer-bio {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    margin-top: 26px;
+  }
+  .lecturer-bio + .lecturer-bio {
+    margin-top: 14px;
+  }
+
+  .lecturer-certs {
+    margin-top: 30px;
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+  }
+  .lecturer-certs-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.03em;
+  }
+  .lecturer-certs ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .lecturer-certs li {
+    display: flex;
+    gap: 9px;
+    align-items: flex-start;
+  }
+  .cert-plus {
+    color: var(--accent);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .lecturer-certs li span:last-child {
+    font-size: 14.5px;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 880px) {
+    .lecturer-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .lecturer-media {
+      max-width: 420px;
+    }
+  }
+</style>

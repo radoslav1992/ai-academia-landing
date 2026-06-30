@@ -1,0 +1,79 @@
+---
+import { ROUTES } from '../data/site';
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href={ROUTES.home + '#top'} class="brand" aria-label="AI Академия — начало">
+      <span class="brand-mark">AI Академия</span>
+    </a>
+    <nav class="nav" aria-label="Основна навигация">
+      <a href="#courses">Курсове</a>
+      <a href="#lecturer">За лектора</a>
+      <a href="#faq">ЧЗВ</a>
+      <button type="button" class="btn btn-ink nav-cta" data-open-modal>
+        Запиши се безплатно
+      </button>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    background: rgba(250, 246, 239, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .header-inner {
+    padding-block: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .brand-mark {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 1;
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .nav > a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .nav > a:hover {
+    color: var(--accent);
+  }
+  .nav-cta {
+    padding: 11px 22px;
+    font-size: 14px;
+  }
+  @media (max-width: 640px) {
+    .nav {
+      gap: 18px;
+    }
+    .nav > a {
+      font-size: 14px;
+    }
+  }
+</style>

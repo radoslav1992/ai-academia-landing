@@ -1,0 +1,59 @@
+---
+import { AFFILIATIONS } from '../data/content';
+---
+
+<section class="affiliations" aria-label="Опитът зад програмата">
+  <div class="container aff-inner">
+    <span class="aff-label">ОПИТЪТ ЗАД ПРОГРАМАТА</span>
+    <div class="aff-list">
+      {
+        AFFILIATIONS.map((aff) => (
+          <div class="aff-item">
+            <span class="aff-org">{aff.org}</span>
+            <span class="aff-role">{aff.role}</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .affiliations {
+    margin-top: 48px;
+  }
+  .aff-inner {
+    border-top: 1px solid var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    padding-block: 26px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .aff-label {
+    font-size: 13px;
+    color: var(--muted-2);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .aff-list {
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+  .aff-item {
+    display: flex;
+    flex-direction: column;
+  }
+  .aff-org {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 20px;
+  }
+  .aff-role {
+    font-size: 13px;
+    color: var(--muted-2);
+  }
+</style>

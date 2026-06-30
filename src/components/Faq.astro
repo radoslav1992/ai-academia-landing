@@ -1,0 +1,124 @@
+---
+import { FAQ } from '../data/content';
+---
+
+<section id="faq" class="faq">
+  <div class="container faq-inner">
+    <div class="faq-head">
+      <span class="eyebrow">ЧЕСТО ЗАДАВАНИ ВЪПРОСИ</span>
+      <h2>Имаш въпроси? Ето отговорите</h2>
+    </div>
+
+    <div class="faq-list" data-faq>
+      {
+        FAQ.map((item, i) => (
+          <details class="faq-item" open={i === 0} name="faq">
+            <summary>
+              <span class="faq-q">{item.q}</span>
+              <span class="faq-icon" aria-hidden="true" />
+            </summary>
+            <p class="faq-a">{item.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq {
+    padding-block: 96px 110px;
+  }
+  .faq-inner {
+    max-width: 880px;
+  }
+  .faq-head {
+    text-align: center;
+  }
+  .faq-head h2 {
+    font-size: clamp(2rem, 3.4vw, 2.8rem);
+    line-height: 1.15;
+    margin: 12px 0 0;
+  }
+  .faq-list {
+    margin-top: 44px;
+  }
+  .faq-item {
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .faq-item summary {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 22px 4px;
+    cursor: pointer;
+    text-align: left;
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--ink);
+    list-style: none;
+  }
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-q {
+    flex: 1;
+  }
+  .faq-icon {
+    position: relative;
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+  }
+  /* plus / minus drawn with two bars so it animates cleanly */
+  .faq-icon::before,
+  .faq-icon::after {
+    content: '';
+    position: absolute;
+    background: var(--accent);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .faq-icon::before {
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    transform: translateY(-50%);
+  }
+  .faq-icon::after {
+    left: 50%;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    transform: translateX(-50%);
+  }
+  .faq-item[open] .faq-icon::after {
+    opacity: 0;
+    transform: translateX(-50%) scaleY(0);
+  }
+  .faq-a {
+    margin: 0 4px 24px;
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 760px;
+  }
+</style>
+
+<script>
+  // Progressive enhancement: keep a single FAQ item open at a time.
+  // The `name="faq"` attribute already does this in modern browsers; this is a
+  // fallback for engines that don't yet support exclusive <details> groups.
+  document.querySelectorAll<HTMLDetailsElement>('[data-faq] details').forEach((el) => {
+    el.addEventListener('toggle', () => {
+      if (!el.open) return;
+      el.parentElement
+        ?.querySelectorAll<HTMLDetailsElement>('details[open]')
+        .forEach((other) => {
+          if (other !== el) other.open = false;
+        });
+    });
+  });
+</script>

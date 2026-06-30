@@ -1,0 +1,149 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { SITE, ROUTES } from '../data/site';
+import { graph, breadcrumbSchema, organizationSchema } from '../lib/structured-data';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  lastUpdated: string;
+}
+
+const { title, description, path, lastUpdated } = Astro.props;
+
+const jsonLd = graph(
+  organizationSchema(),
+  breadcrumbSchema([
+    { name: 'Начало', path: ROUTES.home },
+    { name: title, path },
+  ]),
+);
+---
+
+<BaseLayout
+  title={`${title} · ${SITE.name}`}
+  description={description}
+  path={path}
+  ogType="article"
+  jsonLd={jsonLd}
+>
+  <header class="legal-header">
+    <div class="legal-bar">
+      <a href={ROUTES.home} class="legal-brand">AI Академия</a>
+      <a href={ROUTES.home} class="legal-back">← Към началната страница</a>
+    </div>
+  </header>
+
+  <main class="legal-main">
+    <span class="eyebrow">ПРАВНА ИНФОРМАЦИЯ</span>
+    <h1 class="legal-title">{title}</h1>
+    <p class="legal-date">Последна актуализация: {lastUpdated}</p>
+    <div class="legal-body">
+      <slot />
+    </div>
+  </main>
+
+  <footer class="legal-footer">
+    <span>© 2026 AI Академия · {SITE.owner}. Всички права запазени.</span>
+  </footer>
+</BaseLayout>
+
+<style>
+  .legal-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(250, 246, 239, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .legal-bar {
+    max-width: 880px;
+    margin-inline: auto;
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .legal-brand {
+    text-decoration: none;
+    color: var(--ink);
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 21px;
+    line-height: 1;
+  }
+  .legal-back {
+    text-decoration: none;
+    color: var(--muted-2);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .legal-back:hover {
+    color: var(--accent);
+  }
+
+  .legal-main {
+    max-width: 760px;
+    margin-inline: auto;
+    padding: 64px 28px 110px;
+  }
+  .legal-title {
+    font-size: clamp(2rem, 4vw, 2.7rem);
+    line-height: 1.2;
+    margin: 14px 0 6px;
+  }
+  .legal-date {
+    font-size: 14px;
+    color: var(--muted-3);
+    margin: 0 0 40px;
+  }
+
+  /* shared typography for legal content (rendered via slot) */
+  .legal-body :global(p) {
+    font-size: 15.5px;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .legal-body :global(.lead) {
+    font-size: 16px;
+  }
+  .legal-body :global(h2) {
+    font-size: 22px;
+    margin: 38px 0 12px;
+  }
+  .legal-body :global(ul) {
+    font-size: 15.5px;
+    line-height: 1.8;
+    color: var(--ink-soft);
+    padding-left: 20px;
+    margin: 0;
+  }
+  .legal-body :global(a) {
+    color: var(--ink);
+  }
+  .legal-body :global(.note) {
+    margin-top: 48px;
+    padding: 18px 22px;
+    background: var(--panel);
+    border-radius: 14px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--muted-2);
+  }
+
+  .legal-footer {
+    border-top: 1px solid var(--line);
+    padding: 28px;
+    text-align: center;
+  }
+  .legal-footer span {
+    font-size: 13px;
+    color: var(--muted-3);
+  }
+</style>

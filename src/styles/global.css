@@ -1,0 +1,185 @@
+/* ============================================================
+   AI Академия — global design tokens & base styles
+   Palette and type taken from the design handoff (Landing.dc.html).
+
+   Type note: the handoff specified Newsreader (serif) + Plus Jakarta
+   Sans (sans). Neither ships the basic Cyrillic glyphs Bulgarian needs,
+   so they are substituted with the closest Cyrillic-capable matches:
+   Lora (literary serif) and Manrope (geometric sans), self-hosted.
+   ============================================================ */
+
+:root {
+  /* surfaces */
+  --bg: #faf6ef;
+  --panel: #f3eee3;
+  --card: #ffffff;
+
+  /* ink / text */
+  --ink: #1c1a16;
+  --ink-soft: #403d36;
+  --muted: #534f45;
+  --muted-2: #6b665c;
+  --muted-3: #8b8678;
+  --muted-4: #9a958a;
+
+  /* brand accents */
+  --accent: #c2410c;
+  --accent-press: #9a3e0c;
+  --green: #1f4b43;
+  --gold: #a8762b;
+
+  /* incidental */
+  --badge-bg: #f2dcc9;
+  --badge-ink: #9a3e0c;
+  --line: rgba(28, 26, 22, 0.1);
+  --line-strong: rgba(28, 26, 22, 0.12);
+
+  /* layout */
+  --max: 1180px;
+  --gutter: 28px;
+
+  /* type families */
+  --font-serif: 'Lora Variable', 'Lora', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Manrope Variable', 'Manrope', system-ui, -apple-system,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+}
+
+button {
+  font-family: var(--font-sans);
+}
+
+input::placeholder {
+  color: var(--muted-4);
+}
+
+/* shared container */
+.container {
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* eyebrow label used above section headings */
+.eyebrow {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+/* visually-hidden, still read by screen readers + crawlers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* accessible focus ring */
+:where(a, button, input, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* primary pill button */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(194, 65, 12, 0.28);
+}
+
+.btn-accent:hover {
+  background: var(--accent-press);
+}
+
+.btn-ink {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.btn-ink:hover {
+  background: #000;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid rgba(28, 26, 22, 0.25);
+}
+
+.btn-ghost:hover {
+  border-color: var(--ink);
+}

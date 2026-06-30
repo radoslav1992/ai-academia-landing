@@ -1,0 +1,32 @@
+{
+  // Cloudflare Workers configuration for the AI Академия landing page.
+  // Docs: https://developers.cloudflare.com/workers/wrangler/configuration/
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ai-akademia",
+  "main": "./dist/_worker.js/index.js",
+  "compatibility_date": "2025-05-05",
+  "compatibility_flags": ["nodejs_compat"],
+
+  // Serve the prerendered Astro output (HTML, CSS, images, fonts) as static
+  // assets directly from Cloudflare's edge. The Worker only runs for /api/*.
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist"
+  },
+
+  "observability": {
+    "enabled": true
+  },
+
+  // D1 database that stores course subscribers.
+  // Create it once with:  wrangler d1 create ai-akademia-subscribers
+  // then paste the returned database_id below.
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "ai-akademia-subscribers",
+      "database_id": "REPLACE_WITH_YOUR_D1_DATABASE_ID",
+      "migrations_dir": "db/migrations"
+    }
+  ]
+}

@@ -1,0 +1,499 @@
+---
+import { COURSES } from '../data/content';
+import { ROUTES } from '../data/site';
+---
+
+<div class="modal-overlay" data-modal hidden>
+  <div
+    class="modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
+    data-modal-dialog
+  >
+    <button type="button" class="modal-close" data-close-modal aria-label="Затвори">
+      ×
+    </button>
+
+    <!-- FORM VIEW -->
+    <div data-modal-form>
+      <h3 id="modal-title">Запиши се безплатно</h3>
+      <p class="modal-sub">
+        Избери курс или курсове и остави данните си. Ще ти изпратим имейл с
+        датата, часа и мястото.
+      </p>
+
+      <form data-subscribe-form novalidate>
+        <div class="modal-courses">
+          {
+            COURSES.map((course) => (
+              <label class="course-check" style={`--c:${course.accent}`}>
+                <input
+                  type="checkbox"
+                  name="courses"
+                  value={course.id}
+                  data-title={course.title}
+                />
+                <span class="course-dot" aria-hidden="true" />
+                <span class="course-name">{course.title}</span>
+              </label>
+            ))
+          }
+        </div>
+
+        <div class="modal-fields">
+          <input
+            type="text"
+            name="name"
+            placeholder="Име"
+            autocomplete="name"
+            maxlength="120"
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Имейл адрес"
+            autocomplete="email"
+            maxlength="254"
+          />
+        </div>
+
+        <label class="consent">
+          <input type="checkbox" name="consent" />
+          <span>
+            Съгласявам се да получавам по имейл информация за избраните курсове,
+            съгласно <a href={ROUTES.privacy}>Политиката за поверителност</a>.
+          </span>
+        </label>
+
+        <p class="modal-error" data-error hidden role="alert"></p>
+
+        <button type="submit" class="modal-submit" data-submit disabled>
+          Запиши ме
+        </button>
+        <p class="modal-fineprint">
+          Без плащане и без ангажимент. Можеш да се отпишеш по всяко време.
+        </p>
+      </form>
+    </div>
+
+    <!-- SUCCESS VIEW -->
+    <div class="modal-success" data-modal-success hidden>
+      <div class="success-check" aria-hidden="true">✓</div>
+      <h3>Готово!</h3>
+      <p>
+        Записахме те за: <span data-success-courses></span>. Изпратихме
+        потвърждение на <strong data-success-email></strong> — съвсем скоро ще
+        получиш и точните дата, час и място на сесията.
+      </p>
+      <button type="button" class="btn btn-ink success-close" data-close-modal>
+        Затвори
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(28, 26, 22, 0.55);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: overlay-in 0.18s ease;
+  }
+  .modal-overlay[hidden] {
+    display: none;
+  }
+  @keyframes overlay-in {
+    from {
+      opacity: 0;
+    }
+  }
+  .modal {
+    background: var(--bg);
+    border-radius: 26px;
+    max-width: 480px;
+    width: 100%;
+    padding: 38px 34px;
+    position: relative;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+    max-height: 88vh;
+    overflow-y: auto;
+    animation: modal-in 0.2s ease;
+  }
+  @keyframes modal-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.99);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .modal-overlay,
+    .modal {
+      animation: none;
+    }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    background: rgba(28, 26, 22, 0.06);
+    border: none;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    font-size: 17px;
+    cursor: pointer;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .modal-close:hover {
+    background: rgba(28, 26, 22, 0.12);
+  }
+
+  .modal h3 {
+    font-size: 25px;
+    margin: 8px 0 0;
+    padding-right: 30px;
+  }
+  .modal-sub {
+    font-size: 14.5px;
+    color: var(--muted-2);
+    margin: 8px 0 0;
+  }
+
+  .modal-courses {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 22px;
+  }
+  .course-check {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: 14px;
+    padding: 13px 16px;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+  }
+  .course-check:has(input:checked) {
+    border-color: var(--c);
+  }
+  .course-check input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--c);
+    flex-shrink: 0;
+    margin: 0;
+  }
+  .course-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--c);
+    flex-shrink: 0;
+  }
+  .course-name {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .modal-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 20px;
+  }
+  .modal-fields input {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1.5px solid rgba(28, 26, 22, 0.15);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 15px;
+    background: #fff;
+    color: var(--ink);
+  }
+  .modal-fields input:focus {
+    border-color: var(--accent);
+    outline: none;
+  }
+
+  .consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 18px;
+    cursor: pointer;
+  }
+  .consent input {
+    width: 17px;
+    height: 17px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    accent-color: var(--accent);
+  }
+  .consent span {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--muted-2);
+  }
+  .consent a {
+    color: var(--ink);
+  }
+
+  .modal-error {
+    margin: 16px 0 0;
+    font-size: 13.5px;
+    color: #b3340b;
+    background: #f7e4da;
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+  .modal-error[hidden] {
+    display: none;
+  }
+
+  .modal-submit {
+    margin-top: 22px;
+    width: 100%;
+    background: rgba(28, 26, 22, 0.25);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 16px;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 15.5px;
+    cursor: not-allowed;
+    transition: background 0.15s ease;
+  }
+  .modal-submit.is-ready {
+    background: var(--accent);
+    cursor: pointer;
+  }
+  .modal-submit.is-ready:hover {
+    background: var(--accent-press);
+  }
+  .modal-submit[aria-busy='true'] {
+    opacity: 0.75;
+    cursor: progress;
+  }
+  .modal-fineprint {
+    font-size: 12px;
+    color: var(--muted-4);
+    margin: 14px 0 0;
+    text-align: center;
+  }
+
+  /* success */
+  .modal-success {
+    text-align: center;
+    padding: 20px 0 6px;
+  }
+  .modal-success[hidden] {
+    display: none;
+  }
+  .success-check {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--green);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin: 0 auto;
+  }
+  .modal-success h3 {
+    font-size: 24px;
+    margin: 20px 0 0;
+    padding: 0;
+  }
+  .modal-success p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--muted);
+    margin: 12px 0 0;
+  }
+  .success-close {
+    margin-top: 24px;
+    padding: 14px 30px;
+    font-size: 15px;
+  }
+</style>
+
+<script>
+  type ModalEls = {
+    overlay: HTMLElement;
+    form: HTMLFormElement;
+    formView: HTMLElement;
+    successView: HTMLElement;
+    submit: HTMLButtonElement;
+    error: HTMLElement;
+    successCourses: HTMLElement;
+    successEmail: HTMLElement;
+  };
+
+  function initModal() {
+    const overlay = document.querySelector<HTMLElement>('[data-modal]');
+    if (!overlay) return;
+
+    const els: ModalEls = {
+      overlay,
+      form: overlay.querySelector('[data-subscribe-form]') as HTMLFormElement,
+      formView: overlay.querySelector('[data-modal-form]') as HTMLElement,
+      successView: overlay.querySelector('[data-modal-success]') as HTMLElement,
+      submit: overlay.querySelector('[data-submit]') as HTMLButtonElement,
+      error: overlay.querySelector('[data-error]') as HTMLElement,
+      successCourses: overlay.querySelector('[data-success-courses]') as HTMLElement,
+      successEmail: overlay.querySelector('[data-success-email]') as HTMLElement,
+    };
+
+    const emailValid = (v: string) => /^\S+@\S+\.\S+$/.test(v);
+    const courseInputs = () =>
+      Array.from(
+        els.form.querySelectorAll<HTMLInputElement>('input[name="courses"]'),
+      );
+    const nameInput = () =>
+      els.form.querySelector<HTMLInputElement>('input[name="name"]')!;
+    const emailInput = () =>
+      els.form.querySelector<HTMLInputElement>('input[name="email"]')!;
+    const consentInput = () =>
+      els.form.querySelector<HTMLInputElement>('input[name="consent"]')!;
+
+    let lastFocused: HTMLElement | null = null;
+
+    function canSubmit(): boolean {
+      const name = nameInput().value.trim();
+      const selected = courseInputs().filter((c) => c.checked);
+      return (
+        name.length > 1 &&
+        emailValid(emailInput().value.trim()) &&
+        selected.length > 0 &&
+        consentInput().checked
+      );
+    }
+
+    function refresh() {
+      const ready = canSubmit();
+      els.submit.disabled = !ready;
+      els.submit.classList.toggle('is-ready', ready);
+    }
+
+    function openModal(courseId: string | null) {
+      lastFocused = document.activeElement as HTMLElement;
+      els.form.reset();
+      els.formView.hidden = false;
+      els.successView.hidden = true;
+      els.error.hidden = true;
+      if (courseId) {
+        courseInputs().forEach((c) => (c.checked = c.value === courseId));
+      }
+      refresh();
+      overlay.hidden = false;
+      document.body.style.overflow = 'hidden';
+      const close = overlay.querySelector<HTMLElement>('[data-close-modal]');
+      close?.focus();
+    }
+
+    function closeModal() {
+      overlay.hidden = true;
+      document.body.style.overflow = '';
+      els.submit.removeAttribute('aria-busy');
+      els.submit.textContent = 'Запиши ме';
+      lastFocused?.focus();
+    }
+
+    // Open triggers
+    document.querySelectorAll<HTMLElement>('[data-open-modal]').forEach((btn) => {
+      btn.addEventListener('click', () =>
+        openModal(btn.getAttribute('data-course')),
+      );
+    });
+
+    // Close triggers
+    overlay
+      .querySelectorAll<HTMLElement>('[data-close-modal]')
+      .forEach((b) => b.addEventListener('click', closeModal));
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !overlay.hidden) closeModal();
+    });
+
+    // Live validation
+    els.form.addEventListener('input', refresh);
+    els.form.addEventListener('change', refresh);
+
+    // Submit
+    els.form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!canSubmit()) {
+        refresh();
+        return;
+      }
+      const selected = courseInputs().filter((c) => c.checked);
+      const payload = {
+        name: nameInput().value.trim(),
+        email: emailInput().value.trim(),
+        courses: selected.map((c) => c.value),
+        consent: consentInput().checked,
+        source: 'web',
+      };
+
+      els.error.hidden = true;
+      els.submit.setAttribute('aria-busy', 'true');
+      els.submit.disabled = true;
+      els.submit.textContent = 'Записваме те…';
+
+      try {
+        const res = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = (await res.json().catch(() => ({}))) as {
+          ok?: boolean;
+          error?: string;
+        };
+        if (!res.ok || !data.ok) {
+          throw new Error(data.error || 'Възникна грешка. Опитай отново.');
+        }
+        // success
+        els.successCourses.textContent = selected
+          .map((c) => c.getAttribute('data-title'))
+          .join(', ');
+        els.successEmail.textContent = payload.email;
+        els.formView.hidden = true;
+        els.successView.hidden = false;
+        els.successView.querySelector<HTMLElement>('[data-close-modal]')?.focus();
+      } catch (err) {
+        els.error.textContent =
+          err instanceof Error
+            ? err.message
+            : 'Възникна грешка. Опитай отново.';
+        els.error.hidden = false;
+        els.submit.removeAttribute('aria-busy');
+        els.submit.textContent = 'Запиши ме';
+        refresh();
+      }
+    });
+
+    refresh();
+  }
+
+  initModal();
+</script>

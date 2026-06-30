@@ -1,0 +1,81 @@
+---
+const slots = [1, 2, 3];
+---
+
+<section class="social" aria-labelledby="social-title">
+  <div class="container">
+    <div class="social-head">
+      <span class="eyebrow">УЧАСТНИЦИ</span>
+      <h2 id="social-title">Какво ще кажат участниците</h2>
+      <p>
+        Първият випуск тепърва предстои, затова съвсем скоро тук ще се появят
+        истински отзиви. Запиши се и бъди сред първите, които ще ги напишат.
+      </p>
+    </div>
+    <div class="social-grid">
+      {
+        slots.map(() => (
+          <div class="social-slot">
+            <span class="social-quote" aria-hidden="true">
+              &ldquo;
+            </span>
+            <span class="social-text">Тук съвсем скоро ще се появи отзив.</span>
+            <span class="social-author">Бъдещ участник</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .social {
+    padding-block: 96px 40px;
+  }
+  .social-head {
+    max-width: 620px;
+  }
+  .social-head h2 {
+    font-size: clamp(2rem, 3.4vw, 2.8rem);
+    line-height: 1.15;
+    margin: 12px 0 0;
+  }
+  .social-head p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 16px 0 0;
+  }
+  .social-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 40px;
+  }
+  .social-slot {
+    border: 1.5px dashed rgba(28, 26, 22, 0.18);
+    border-radius: 20px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .social-quote {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 34px;
+    line-height: 1;
+    color: rgba(28, 26, 22, 0.18);
+  }
+  .social-text {
+    font-style: italic;
+    color: var(--muted-4);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .social-author {
+    font-size: 13px;
+    color: #b7b2a6;
+    font-weight: 600;
+  }
+</style>

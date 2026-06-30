@@ -1,0 +1,28 @@
+{
+  "name": "ai-akademia-landing",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI Академия — безплатни AI курсове на живо в София. Astro + Cloudflare Workers + D1.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "wrangler dev",
+    "deploy": "astro build && wrangler deploy",
+    "astro": "astro",
+    "db:init": "wrangler d1 execute ai-akademia-subscribers --file=./db/schema.sql",
+    "db:init:remote": "wrangler d1 execute ai-akademia-subscribers --remote --file=./db/schema.sql",
+    "cf-typegen": "wrangler types"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^12.6.0",
+    "@astrojs/sitemap": "^3.6.0",
+    "@fontsource-variable/lora": "^5.2.8",
+    "@fontsource-variable/manrope": "^5.2.8",
+    "astro": "^5.14.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.42.0"
+  }
+}

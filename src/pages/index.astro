@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Affiliations from '../components/Affiliations.astro';
+import Courses from '../components/Courses.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import Lecturer from '../components/Lecturer.astro';
+import SocialProof from '../components/SocialProof.astro';
+import Faq from '../components/Faq.astro';
+import FinalCta from '../components/FinalCta.astro';
+import Footer from '../components/Footer.astro';
+import SubscribeModal from '../components/SubscribeModal.astro';
+import { SITE } from '../data/site';
+import {
+  graph,
+  websiteSchema,
+  organizationSchema,
+  personSchema,
+  courseSchemas,
+  faqSchema,
+} from '../lib/structured-data';
+
+const jsonLd = graph(
+  websiteSchema(),
+  organizationSchema(),
+  personSchema(),
+  ...courseSchemas(),
+  faqSchema(),
+);
+---
+
+<BaseLayout title={SITE.title} description={SITE.description} path="/" jsonLd={jsonLd}>
+  <Header />
+  <span id="top" class="sr-only"></span>
+  <main>
+    <Hero />
+    <Affiliations />
+    <Courses />
+    <HowItWorks />
+    <Lecturer />
+    <SocialProof />
+    <Faq />
+    <FinalCta />
+  </main>
+  <Footer />
+  <SubscribeModal />
+</BaseLayout>
