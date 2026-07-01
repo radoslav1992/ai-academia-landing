@@ -25,7 +25,7 @@
     {
       "binding": "DB",
       "database_name": "ai-akademia-subscribers",
-      "database_id": "REPLACE_WITH_YOUR_D1_DATABASE_ID",
+      "database_id": "7e320a63-f1b2-4120-9447-2bb940378afd",
       "migrations_dir": "db/migrations"
     }
   ]
