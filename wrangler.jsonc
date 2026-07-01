@@ -2,7 +2,7 @@
   // Cloudflare Workers configuration for the AI Академия landing page.
   // Docs: https://developers.cloudflare.com/workers/wrangler/configuration/
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "ai-akademia",
+  "name": "ai-academia-landing",
   "main": "./dist/_worker.js/index.js",
   "compatibility_date": "2025-05-05",
   "compatibility_flags": ["nodejs_compat"],
